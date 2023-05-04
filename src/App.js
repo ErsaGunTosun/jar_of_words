@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import Header from "./components/Header";
+import Jar from "./components/Jar";
+import Footer from "./components/Footer";
+import AddWord from "./components/AddWord";
 
 function App() {
+  const [show, setShow] = useState(false);
+  const [addWordModal, setAddWordModal] = useState(false);
+  const [questionModal, setQuestionModal] = useState(false);
+
+  const handleShow = () => setShow(!show);
+  const handleWordModal = () => setAddWordModal(!addWordModal);
+  const handleQuestionModal = () => setQuestionModal(!questionModal);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div class="min-h-screen flex flex-col mx-auto bg-white dark:bg-neutral-950 ">
+      <Header
+        show={show}
+        handleShow={handleShow}
+        handleWordModal={handleWordModal}
+      />
+
+      <Jar
+        show={show}
+        addWordModal={addWordModal}
+        handleWordModal={handleWordModal}
+        questionModal={questionModal}
+        handleQuestionModal={handleQuestionModal}
+      />
+
+      <Footer />
     </div>
   );
 }
