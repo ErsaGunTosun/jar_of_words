@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Jar from "./components/Jar";
 import Footer from "./components/Footer";
-import AddWord from "./components/AddWord";
 
 function App() {
   const [show, setShow] = useState(false);
@@ -14,7 +13,7 @@ function App() {
   const handleWordModal = () => setAddWordModal(!addWordModal);
   const handleQuestionModal = () => setQuestionModal(!questionModal);
   return (
-    <div class="min-h-screen flex flex-col mx-auto bg-white dark:bg-neutral-950 ">
+    <div className="min-h-screen flex flex-col mx-auto bg-white dark:bg-neutral-950 ">
       <Header
         show={show}
         handleShow={handleShow}

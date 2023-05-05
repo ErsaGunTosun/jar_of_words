@@ -1,25 +1,33 @@
 import React from "react";
 
 function Header({ show, handleShow, handleWordModal }) {
-  
+
   const changeTheme = () => {
-    if(localStorage.theme == 'dark'){
+    if (localStorage.theme === 'dark') {
       localStorage.theme = 'light';
       document.documentElement.classList.remove("dark");
-    }else if(localStorage.theme == 'light'){
+    } else if (localStorage.theme === 'light') {
       localStorage.theme = 'dark';
       document.documentElement.classList.add("dark");
-    }else{
+    } else {
       localStorage.theme = 'light';
       document.documentElement.classList.remove("dark");
     }
   };
 
+  const openModal = () => {
+    if(show){
+      handleShow();
+    }
+    handleWordModal();
+  };
+
+
   return (
     <header className="text-end py-3">
       <div className="flex justify-end gap-5 mr-5 ">
         <button
-          onClick={handleWordModal}
+          onClick={openModal}
           type="button"
           className="text-white dark:text-neutral-950 font-semibold italic bg-neutral-950 hover:bg-neutral-700
           dark:bg-white dark:hover:bg-neutral-200
@@ -41,10 +49,10 @@ function Header({ show, handleShow, handleWordModal }) {
           <div className="text-white dark:text-neutral-950  flex justify-end static">
             <div className="mr-5 rounded-md text-lg text-start">
               <p className=" pb-1 pt-2  px-6 rounded-t-md  bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
-                <i class="fa-solid fa-file-import"></i> Words Save
+                <i className="fa-solid fa-file-import"></i> Words Save
               </p>
               <p className=" py-1 px-6 bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
-                <i class="fa-solid fa-floppy-disk"></i> Words Export
+                <i className="fa-solid fa-floppy-disk"></i> Words Export
               </p>
               <p
                 onClick={changeTheme}
@@ -52,11 +60,11 @@ function Header({ show, handleShow, handleWordModal }) {
               >
                 {localStorage.theme === "light" ? (
                   <span>
-                    <i class="fa-solid fa-moon"></i> Dark Mode
+                    <i className="fa-solid fa-moon"></i> Dark Mode
                   </span>
                 ) : (
                   <span>
-                    <i class="fa-solid fa-sun"></i> Light Mode
+                    <i className="fa-solid fa-sun"></i> Light Mode
                   </span>
                 )}
               </p>
