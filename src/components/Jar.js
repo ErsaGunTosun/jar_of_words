@@ -29,6 +29,8 @@ function Jar({
   }, [words]);
 
   const AddWordData = (data) => {
+    console.log("sa");
+    console.log("sa",data);
     const wordsJson = JSON.parse(localStorage.getItem("words"));
     wordsJson.push(data);
     setWords([...wordsJson, data]);
@@ -36,13 +38,23 @@ function Jar({
   }
 
   const UpdateWordData = (data) => {
-    words.map((word) => {
-      if (word.id == data.id) {
-        word = data;
+    console.log("as");
+
+    for(let i = 0; i < words.length; i++) {
+      console.log("1");
+      if(words[i].id === data.id) {
+        console.log("2");
+        words[i].falseCount = data.falseCount;
+        words[i].trueCount = data.trueCount;
+        words[i].showCount = data.showCount;
+        break;
       }
-    })
-    setWords([...words]);
+    }
+
+    console.log("as",words);
     localStorage.setItem("words", JSON.stringify(words));
+    console.log(localStorage.getItem("words"));
+
   }
 
   return (
