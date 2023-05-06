@@ -5,6 +5,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
     const [answer, setAnswer] = useState('')
     const [isAnswer, setIsAnswer] = useState(false)
     const [notAnswer, setNotAnswer] = useState(true)
+    const [isCorrect, setIsCorrect] = useState(undefined)
     useEffect(() => {
         if (status) {
             if (words.length > 0) {
@@ -26,7 +27,26 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
         setIsAnswer(true);
     }
 
+    const anwserCheck = () => {
+        if (answer.toLowerCase() === word.meaning.toLowerCase()) {
+            let updateWord = word;
+            updateWord.showCount += 1;
+            updateWord.trueCount += 1;
+            UpdateWordData(updateWord);
+            setIsCorrect(true);
+        }
+        else {
+            let updateWord = word;
+            updateWord.showCount += 1;
+            updateWord.falseCount += 1;
+            UpdateWordData(updateWord);
+            setIsCorrect(false);
+        }
+    }
+
+
     const closeModal = () => {
+        setIsCorrect(undefined);
         setAnswer('');
         setNotAnswer(true);
         setIsAnswer(false);
@@ -49,12 +69,25 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
                                 ?
                                 <div className="p-6 text-center">
                                     <p className='text-white text-4xl'>Question</p>
-                                    <h3 className="mb-5 mt-3 text-lg font-normal text-gray-200 dark:text-gray-200">What is the meaning of "{word.word}" ? </h3>
+                                    <h3 className="mb-1 mt-3 text-lg font-normal text-gray-200 dark:text-gray-200">What is the meaning of "{word.word}" ? </h3>
+                                    {
+                                        isCorrect === true ?
+                                            <p className='text-green-500 text-lg font-semibold'>
+                                                Your answer is correct
+                                            </p>
+                                            : isCorrect === false ?
+                                                <p className='text-red-500 text-lg'>
+                                                    Your answer is wrong
+                                                </p>
+                                                : ""
+
+                                    }
+
                                     {
                                         !isAnswer ?
                                             <div className="relative z-0 w-full mb-6 group text-start">
-                                                <input value={answer} onChange={(e) => setAnswer(e.target.value)} type="email" name="word" id="word" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
-                                                <label htmlFor="word" className="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white- peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Answer</label>
+                                                <input autoComplete='off' disabled={`${ isCorrect !== undefined? isCorrect == true || isCorrect == false ?"disabled":"" : ""}`} value={answer} onChange={(e) => setAnswer(e.target.value)} type="email" name="word" id="word" className={`disable block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer disabled:${isCorrect == true ? "border-green-500" :"border-red-500" }`} placeholder=" " required />
+                                                <label htmlFor="word" className={`peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-disabled:${isCorrect == true ?"text-green-500":"text-red-500" }`}>Answer</label>
                                             </div>
                                             :
                                             <div>
@@ -62,18 +95,28 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
                                             </div>
                                     }
 
+
+
                                     <div className='flex justify-end'>
                                         {
                                             !isAnswer
                                                 ?
-                                                <>
-                                                    <button onClick={ıdontknow} data-modal-hide="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                                        I don't know
-                                                    </button>
-                                                    <button data-modal-hide="popup-modal" type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-green-600 text-sm font-medium px-5 py-2.5 hover:text-white focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                                                        Check
-                                                    </button>
-                                                </>
+                                                isCorrect === undefined ?
+                                                    <>
+                                                        <button onClick={ıdontknow} data-modal-hide="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                            I don't know
+                                                        </button>
+                                                        <button onClick={anwserCheck} data-modal-hide="popup-modal" type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-green-600 text-sm font-medium px-5 py-2.5 hover:text-white focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 ">
+                                                            Check
+                                                        </button>
+                                                    </>
+                                                    :
+                                                    isCorrect === false || isCorrect === true ?
+                                                        <button onClick={closeModal} data-modal-hide="popup-modal" type="button" className="text-white hover:text-black bg-transparent hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-white text-base font-semibold px-5 py-2.5  focus:z-10 dark:bg-transparent dark:text-white dark:border-white dark:hover:text-black dark:hover:bg-white dark:focus:ring-gray-600">
+                                                            Cancel
+                                                        </button>
+                                                        :
+                                                        ""
                                                 :
                                                 ""
                                             // <button onClick={closeModal} data-modal-hide="popup-modal" type="button" className="text-white hover:text-black bg-transparent hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-white text-base font-semibold px-5 py-2.5  focus:z-10 dark:bg-transparent dark:text-white dark:border-white dark:hover:text-black dark:hover:bg-white dark:focus:ring-gray-600">
