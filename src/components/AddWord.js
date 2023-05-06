@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import uniqid from 'uniqid'
 
 function AddWord({ status, handleWordModal, AddWordData }) {
     const [word, setWord] = useState('')
@@ -31,6 +32,7 @@ function AddWord({ status, handleWordModal, AddWordData }) {
         }
         else {
             let data = {
+                id: uniqid(),
                 word: word,
                 meaning: meaning,
                 sentence: sentence,

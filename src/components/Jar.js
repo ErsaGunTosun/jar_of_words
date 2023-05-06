@@ -35,6 +35,16 @@ function Jar({
     localStorage.setItem("words", JSON.stringify(wordsJson));
   }
 
+  const UpdateWordData = (data) => {
+    words.map((word) => {
+      if (word.id == data.id) {
+        word = data;
+      }
+    })
+    setWords([...words]);
+    localStorage.setItem("words", JSON.stringify(words));
+  }
+
   return (
     <>
       <main className=" text-center text-5xl flex-1 flex flex-wrap ">
@@ -42,10 +52,17 @@ function Jar({
 
         <div className="items-center text-center justify-center flex-1 flex flex-wrap">
           <div className="text-center justify-items-center">
-            <AddWord status={addWordModal} handleWordModal={handleWordModal} AddWordData={AddWordData} />
+
+            <AddWord
+              status={addWordModal}
+              handleWordModal={handleWordModal}
+              AddWordData={AddWordData} />
+
             <Question
               status={questionModal}
               handleQuestionModal={handleQuestionModal}
+              words={words}
+              UpdateWordData={UpdateWordData}
             />
 
             <p className="mb-4 text-5xl italic text-neutral-950 dark:text-white">Click and test yourself</p>
