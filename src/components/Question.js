@@ -69,7 +69,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
                                 ?
                                 <div className="p-6 text-center">
                                     <p className='text-white text-4xl'>Question</p>
-                                    <h3 className="mb-1 mt-3 text-lg font-normal text-gray-200 dark:text-gray-200">What is the meaning of "{word.word}" ? </h3>
+                                    <h3 className="mb-1 mt-3 text-lg font-normal text-gray-200 dark:text-gray-200">What is the meaning of <span className='font-semibold'>"{word.word.toUpperCase()}"</span> ? </h3>
                                     {
                                         isCorrect === true ?
                                             <p className='text-green-500 text-lg font-semibold'>
@@ -91,7 +91,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData }) {
                                             </div>
                                             :
                                             <div>
-                                                <p className='text-red-500 text-2xl font-semibold'>The word means "{word.meaning}"</p>
+                                                <p className='text-red-500 text-2xl'>The word means  <span className='font-semibold'>"{word.meaning.toUpperCase()}"</span></p>
                                             </div>
                                     }
 

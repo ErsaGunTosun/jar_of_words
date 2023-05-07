@@ -29,32 +29,28 @@ function Jar({
   }, [words]);
 
   const AddWordData = (data) => {
-    console.log("sa");
-    console.log("sa",data);
     const wordsJson = JSON.parse(localStorage.getItem("words"));
-    wordsJson.push(data);
-    setWords([...wordsJson, data]);
-    localStorage.setItem("words", JSON.stringify(wordsJson));
+    const isHave = wordsJson.find((word) => word.id === data.id);
+    if(isHave){
+      console.log("id error");
+    }else{
+      wordsJson.push(data);
+      localStorage.setItem("words", JSON.stringify(wordsJson));
+      setWords(wordsJson);
+    }
+
   }
 
   const UpdateWordData = (data) => {
-    console.log("as");
-
     for(let i = 0; i < words.length; i++) {
-      console.log("1");
       if(words[i].id === data.id) {
-        console.log("2");
         words[i].falseCount = data.falseCount;
         words[i].trueCount = data.trueCount;
         words[i].showCount = data.showCount;
         break;
       }
     }
-
-    console.log("as",words);
     localStorage.setItem("words", JSON.stringify(words));
-    console.log(localStorage.getItem("words"));
-
   }
 
   return (
