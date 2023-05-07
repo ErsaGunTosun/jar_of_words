@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function Header({ show, handleShow, handleWordModal }) {
 
   const changeTheme = () => {
@@ -16,7 +17,7 @@ function Header({ show, handleShow, handleWordModal }) {
   };
 
   const openModal = () => {
-    if(show){
+    if (show) {
       handleShow();
     }
     handleWordModal();
@@ -42,7 +43,11 @@ function Header({ show, handleShow, handleWordModal }) {
         >
           <i className="fa-solid fa-gear text-2xl text-neutral-950 dark:text-white  focus:animate-spin-slow"></i>
         </p>
+
+
       </div>
+
+
 
       <div className="absolute w-full">
         {show && (

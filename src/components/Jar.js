@@ -14,6 +14,7 @@ function Jar({
 }) {
   const [wordCount, setWordCount] = useState(0);
   const [words, setWords] = useState([]);
+  const [oldWords, setOldWords] = useState(undefined);
 
   useEffect(() => {
     if (!localStorage.getItem("words")) {
@@ -43,10 +44,7 @@ function Jar({
 
   }
 
-  // elinde 100 tane kelime var bu kelimelerin kendilerine özel zorluk seviyeleri, doğru sayıları, yanlış sayıları, gösterilme sayıları var.
-  // bunları nasıl sıralarsın ve nasıl seçersin. 
-
-
+ 
   const UpdateWordData = (data) => {
     for (let i = 0; i < words.length; i++) {
       if (words[i].id === data.id) {
@@ -77,6 +75,8 @@ function Jar({
               handleQuestionModal={handleQuestionModal}
               words={words}
               UpdateWordData={UpdateWordData}
+              oldWords={oldWords}
+              setOldWords={setOldWords}
             />
 
             <p className="mb-4 text-5xl italic text-neutral-950 dark:text-white ">Click and test yourself</p>
@@ -94,6 +94,7 @@ function Jar({
             <div className="hidden dark:flex justify-center mt-5">
               <img onClick={handleQuestionModal} className="hover:scale-110 hover:rotate-3 invert cursor-pointer w-64 h-80" src={Img} />
             </div>
+
           </div>
         </div>
       </main>
