@@ -1,7 +1,16 @@
 import React from "react";
 
-
 function Header({ show, handleShow, handleWordModal }) {
+
+  const exportWords = ()=> {
+    const fileData = localStorage.getItem("words");
+    const blob = new Blob([fileData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = "words.json";
+    link.href = url;
+    link.click();
+  }
 
   const changeTheme = () => {
     if (localStorage.theme === 'dark') {
@@ -15,6 +24,8 @@ function Header({ show, handleShow, handleWordModal }) {
       document.documentElement.classList.remove("dark");
     }
   };
+
+
 
   const openModal = () => {
     if (show) {
@@ -43,8 +54,6 @@ function Header({ show, handleShow, handleWordModal }) {
         >
           <i className="fa-solid fa-gear text-2xl text-neutral-950 dark:text-white  focus:animate-spin-slow"></i>
         </p>
-
-
       </div>
 
 
@@ -56,9 +65,11 @@ function Header({ show, handleShow, handleWordModal }) {
               <p className=" pb-1 pt-2  px-6 rounded-t-md  bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
                 <i className="fa-solid fa-file-import"></i> Words Save
               </p>
-              <p className=" py-1 px-6 bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
+
+              <p onClick={exportWords} className=" py-1 px-6 bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
                 <i className="fa-solid fa-floppy-disk"></i> Words Export
               </p>
+
               <p
                 onClick={changeTheme}
                 className="pt-1 pb-2 px-6 bg-neutral-950 rounded-b-md hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer"
