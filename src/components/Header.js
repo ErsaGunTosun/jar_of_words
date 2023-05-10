@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function Header({ show, handleShow, handleWordModal }) {
-  const [status, setStatus] = React.useState(true);
+  const [status, setStatus] = React.useState(false);
   const exportWords = () => {
     const fileData = localStorage.getItem("words");
     const blob = new Blob([fileData], { type: "text/plain" });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-function Question({ status, handleQuestionModal, words, UpdateWordData,oldWords,setOldWords}) {
+function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords, setOldWords }) {
     const [word, setWord] = useState({})
     const [answer, setAnswer] = useState('')
     const [isAnswer, setIsAnswer] = useState(false)
@@ -8,23 +8,28 @@ function Question({ status, handleQuestionModal, words, UpdateWordData,oldWords,
     const [isCorrect, setIsCorrect] = useState(undefined)
     useEffect(() => {
         if (status) {
-            if (words.length > 0) {
+            if (words.length > 1) {
                 let random = Math.floor(Math.random() * words.length)
                 let word = words[random]
-                if(oldWords!== undefined){
-                    while(word.id === oldWords.id){
+                if (oldWords !== undefined) {
+                    while (word.id === oldWords.id) {
                         random = Math.floor(Math.random() * words.length)
                         word = words[random]
                     }
                     setWord(word)
                     setNotAnswer(false)
                     setOldWords(word)
-                   
-                }else{
+
+                } else {
                     setWord(word)
                     setNotAnswer(false)
                     setOldWords(word)
                 }
+            }
+            if (words.length == 1) {
+                setWord(words[0])
+                setNotAnswer(false)
+                setOldWords(words[0])
             }
 
         }
@@ -53,7 +58,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData,oldWords,
             updateWord.falseCount += 1;
             UpdateWordData(updateWord);
             setIsCorrect(false);
-    
+
         }
     }
 
@@ -99,8 +104,8 @@ function Question({ status, handleQuestionModal, words, UpdateWordData,oldWords,
                                     {
                                         !isAnswer ?
                                             <div className="relative z-0 w-full mb-6 group text-start">
-                                                <input autoComplete='off' disabled={`${ isCorrect !== undefined? isCorrect == true || isCorrect == false ?"disabled":"" : ""}`} value={answer} onChange={(e) => setAnswer(e.target.value)} type="email" name="word" id="word" className={`disable block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer ${isCorrect !== undefined ? isCorrect == true ? "disabled:border-green-500 disabled:text-green-500 dark:border-green-500 dark:text-green-500" :"disabled:border-red-500 disabled:text-red-500 dark:border-red-500 dark:text-red-500":"" }`} placeholder=" " required />
-                                                <label htmlFor="word" className={`peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${isCorrect == true ?"peer-disabled:text-green-500":"peer-disabled:text-red-500" }`}>Answer</label>
+                                                <input autoComplete='off' disabled={`${isCorrect !== undefined ? isCorrect == true || isCorrect == false ? "disabled" : "" : ""}`} value={answer} onChange={(e) => setAnswer(e.target.value)} type="email" name="word" id="word" className={`disable block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer ${isCorrect !== undefined ? isCorrect == true ? "disabled:border-green-500 disabled:text-green-500 dark:border-green-500 dark:text-green-500" : "disabled:border-red-500 disabled:text-red-500 dark:border-red-500 dark:text-red-500" : ""}`} placeholder=" " required />
+                                                <label htmlFor="word" className={`peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${isCorrect == true ? "peer-disabled:text-green-500" : "peer-disabled:text-red-500"}`}>Answer</label>
                                             </div>
                                             :
                                             <div>
@@ -110,7 +115,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData,oldWords,
 
 
 
-                                    <div className='flex justify-end'>  
+                                    <div className='flex justify-end'>
                                         {
                                             !isAnswer
                                                 ?
