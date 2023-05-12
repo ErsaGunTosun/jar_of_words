@@ -122,8 +122,10 @@ function Header({ show, handleShow, handleWordModal }) {
 
       <MenuBar
         show={show}
-        handleShow={handleShow}
-        handleWordModal={addWordModalHandle}
+        readFileModalHandle={readFileModalHandle}
+        exportWords={exportWords}
+        changeTheme={changeTheme}
+        theme={theme}
       />
 
       <FileReadModal
