@@ -6,6 +6,8 @@ import Question from "./QuestionModal";
 import Img from "../assets/img.svg";
 
 function Jar({
+  words,
+  setWords,
   show,
   addWordModal,
   handleWordModal,
@@ -13,7 +15,6 @@ function Jar({
   handleQuestionModal,
 }) {
   const [wordCount, setWordCount] = useState(0);
-  const [words, setWords] = useState([]);
   const [oldWords, setOldWords] = useState(undefined);
 
 

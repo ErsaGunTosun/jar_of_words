@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MenuBar from "./MenuBar";
 import FileReadModal from "./FileReadModal";
 
-function Header({ show, handleShow, handleWordModal }) {
+function Header({ show, setWords, handleShow, handleWordModal }) {
   const [status, setStatus] = React.useState(false);
   const [theme, setTheme] = useState(localStorage.theme);
 
@@ -26,14 +26,11 @@ function Header({ show, handleShow, handleWordModal }) {
     if (e.target.files.length > 0) {
       const extension = e.target.files[0].name.split('.').pop();
       if (extension !== 'json') {
-        setStatus(false);
         alert('Please upload a json file')
       }
       else {
         const reader = new FileReader()
         reader.onload = async (e) => {
-          console.log(reader);
-          console.log(e.target.fileName);
           const text = (e.target.result)
           let obj = JSON.parse(text);
           let wordsJson = JSON.parse(localStorage.getItem('words'));
@@ -46,12 +43,14 @@ function Header({ show, handleShow, handleWordModal }) {
             }
           }
           wordsJson.push(...obj);
-          console.log(wordsJson)
           localStorage.setItem('words', JSON.stringify(wordsJson));
+          setWords(wordsJson);
         };
         reader.readAsText(e.target.files[0])
       }
+      setStatus(false);
     }
+    
   }
 
 
