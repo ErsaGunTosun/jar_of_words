@@ -85,18 +85,19 @@ function Header({ show, handleShow, handleWordModal }) {
         <button
           onClick={openModal}
           type="button"
-          className="text-zinc-400 border-2 dark:text-neutral-950 font-semibold italic bg-tranparent hover:bg-zinc-200
-          dark:bg-white dark:hover:bg-neutral-200
-           focus:outline-none focus:ring-1 focus:ring-gray-300  rounded-lg text-sm px-5 py-2.5"
+          className="text-zinc-400 dark:text-neutral-200 hover:bg-zinc-200 dark:hover:bg-neutral-800 font-semibold italic 
+          bg-tranparent dark:bg-trasnparent border-2 dark:border-neutral-800 
+          focus:outline-none focus:ring-1 focus:ring-gray-300  rounded-lg text-base px-5 py-2"
         >
           Add Word
         </button>
 
         <p
-          className="cursor-pointer flex m-0 align-middle border bg-transparent hover:bg-zinc-200 rounded-md w-12 h-10 items-center justify-center"
+          className="cursor-pointer flex m-0 align-middle rounded-md w-12 h-10 items-center justify-center
+          bg-transparent hover:bg-zinc-200 border-2 dark:border-neutral-800 dark:hover:bg-neutral-800"
           onClick={handleShow}
         >
-          <div className="text-zinc-400">
+          <div className="text-zinc-400 dark:text-neutral-200">
             {
               show ? <i class="fa-solid fa-times text-xl"></i> : <i class="fa-solid fa-bars text-xl"></i>
             }
@@ -109,20 +110,23 @@ function Header({ show, handleShow, handleWordModal }) {
 
       <div className="absolute w-full mt-3">
         {show && (
-          <div className="text-zinc-500  flex justify-end static">
-            <div className="mr-5 rounded-md text-lg text-start border-2 border-zinc-300">
-              
-              <p onClick={closeOpenModal} className=" pb-1 pt-2  px-6 rounded-t-md  bg-zinc-200 hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
+          <div className="text-zinc-500 dark:text-neutral-200 flex justify-end static">
+            <div className="mr-5 rounded-md text-lg text-start border-2 border-zinc-300 dark:border-neutral-800">
+
+              <p onClick={closeOpenModal} className=" pb-1 pt-2 px-6 rounded-t-md
+               bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer">
                 <i className="fa-solid fa-file-import"></i> Words File Import
               </p>
 
-              <p onClick={exportWords} className=" py-1 px-6 bg-zinc-200 hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
+              <p onClick={exportWords} className=" py-1 px-6
+               bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer">
                 <i className="fa-solid fa-floppy-disk"></i> Words Export
               </p>
 
               <p
                 onClick={changeTheme}
-                className="pt-1 pb-2 px-6 bg-zinc-200 rounded-b-md hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer"
+                className="pt-1 pb-2 px-6 rounded-b-md 
+                bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer"
               >
                 {theme === "light" ? (
                   <span>
