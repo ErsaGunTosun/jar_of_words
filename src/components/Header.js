@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
+import MenuBar from "./MenuBar";
+import FileReadModal from "./FileReadModal";
+
 function Header({ show, handleShow, handleWordModal }) {
   const [status, setStatus] = React.useState(false);
   const [theme, setTheme] = useState(localStorage.theme);
+
+
+  // Export words to json file function
   const exportWords = () => {
     const fileData = localStorage.getItem("words");
     const blob = new Blob([fileData], { type: "text/plain" });
@@ -13,11 +19,11 @@ function Header({ show, handleShow, handleWordModal }) {
     link.click();
   }
 
-  const showFile = async (e) => {
+
+  // Import words from json file function
+  const readFile = async (e) => {
     e.preventDefault()
     if (e.target.files.length > 0) {
-
-
       const extension = e.target.files[0].name.split('.').pop();
       if (extension !== 'json') {
         setStatus(false);
@@ -48,6 +54,8 @@ function Header({ show, handleShow, handleWordModal }) {
     }
   }
 
+
+  // Change theme function
   const changeTheme = () => {
     if (localStorage.theme === 'dark') {
       setTheme('light');
@@ -65,15 +73,17 @@ function Header({ show, handleShow, handleWordModal }) {
   };
 
 
-
-  const openModal = () => {
+  // Add word modal handle function
+  const addWordModalHandle = () => {
     if (show) {
       handleShow();
     }
     handleWordModal();
   };
 
-  const closeOpenModal = () => {
+
+  // Read file modal handle function
+  const readFileModalHandle = () => {
     if (!status) handleShow();
 
     setStatus(!status);
@@ -81,9 +91,12 @@ function Header({ show, handleShow, handleWordModal }) {
 
   return (
     <header className="text-end py-3">
+      
       <div className="flex justify-end items-center gap-5 mr-5 ">
+
+        {/** Add Word Modal Open Button */}
         <button
-          onClick={openModal}
+          onClick={addWordModalHandle}
           type="button"
           className="text-zinc-400 dark:text-neutral-200 hover:bg-zinc-200 dark:hover:bg-neutral-800 font-semibold italic 
           bg-tranparent dark:bg-trasnparent border-2 dark:border-neutral-800 
@@ -92,6 +105,7 @@ function Header({ show, handleShow, handleWordModal }) {
           Add Word
         </button>
 
+        {/** Settings Menu bar button */}
         <p
           className="cursor-pointer flex m-0 align-middle rounded-md w-12 h-10 items-center justify-center
           bg-transparent hover:bg-zinc-200 border-2 dark:border-neutral-800 dark:hover:bg-neutral-800"
@@ -102,74 +116,21 @@ function Header({ show, handleShow, handleWordModal }) {
               show ? <i class="fa-solid fa-times text-xl"></i> : <i class="fa-solid fa-bars text-xl"></i>
             }
           </div>
-
         </p>
       </div>
 
 
+      <MenuBar
+        show={show}
+        handleShow={handleShow}
+        handleWordModal={addWordModalHandle}
+      />
 
-      <div className="absolute w-full mt-3">
-        {show && (
-          <div className="text-zinc-500 dark:text-neutral-200 flex justify-end static">
-            <div className="mr-5 rounded-md text-lg text-start border-2 border-zinc-300 dark:border-neutral-800">
-
-              <p onClick={closeOpenModal} className=" pb-1 pt-2 px-6 rounded-t-md
-               bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer">
-                <i className="fa-solid fa-file-import"></i> Words File Import
-              </p>
-
-              <p onClick={exportWords} className=" py-1 px-6
-               bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer">
-                <i className="fa-solid fa-floppy-disk"></i> Words Export
-              </p>
-
-              <p
-                onClick={changeTheme}
-                className="pt-1 pb-2 px-6 rounded-b-md 
-                bg-zinc-200 hover:bg-zinc-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer"
-              >
-                {theme === "light" ? (
-                  <span>
-                    <i className="fa-solid fa-moon"></i> Dark Mode
-                  </span>
-                ) : (
-                  <span>
-                    <i className="fa-solid fa-sun"></i> Light Mode
-                  </span>
-                )}
-              </p>
-
-            </div>
-          </div>
-        )}
-      </div>
-
-
-      <div id="popup-modal" tabIndex="-1" className={`${status ? "" : "hidden"} bg-black/5 h-full justify-center items-center flex fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full`}>
-        <div className="relative w-full max-w-sm max-h-full">
-          <div className="relative bg-zinc-300 dark:bg-neutral-800 rounded-lg">
-
-            <button onClick={closeOpenModal} type="button" className="absolute top-4 right-4 text-zinc-800 dark:text-neutral-300 border-zinc-200 dark:border-neutral-700 bg-transparent hover:text-zinc-700 hover:dark:text-neutral-100" data-modal-hide="popup-modal">
-              <svg aria-hidden="true" className="w-5 h-5 m-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-              <span className="sr-only">Close modal</span>
-            </button>
-
-            <div className="">
-              <div className="flex items-center justify-center w-full mt-6">
-                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-zinc-500 dark:border-neutral-300 border-dashed rounded-md cursor-pointer m-3">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg aria-hidden="true" className="w-10 h-10 mb-3 text-zinc-500 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                    <p className="mb-2 text-sm text-zinc-500 dark:text-neutral-300"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                    <p className="text-xs text-zinc-500 dark:text-neutral-300">only files with json extension can be uploaded </p>
-                  </div>
-                  <input id="dropzone-file" type="file" className="hidden" onChange={(e) => showFile(e)} />
-                </label>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      <FileReadModal
+        status={status}
+        readFileModalHandle={readFileModalHandle}
+        readFile={readFile}
+      />
 
     </header>
   );

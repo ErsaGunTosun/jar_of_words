@@ -1,6 +1,7 @@
 {
   "name": "words_jar",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "homepage": "www.jarofwords.app",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import AddWord from "./AddWord";
-import Question from "./Question";
+import AddWord from "./AddWordModal";
+import Question from "./QuestionModal";
 
 import Img from "../assets/img.svg";
 
@@ -16,6 +16,8 @@ function Jar({
   const [words, setWords] = useState([]);
   const [oldWords, setOldWords] = useState(undefined);
 
+
+  // Get words from local storage
   useEffect(() => {
     if (!localStorage.getItem("words")) {
       localStorage.setItem("words", JSON.stringify([]));
@@ -26,11 +28,15 @@ function Jar({
     }
   }, []);
 
+
+  // Function that works when a new word is added
   useEffect(() => {
     const wordsJson = JSON.parse(localStorage.getItem("words"));
     setWordCount(wordsJson.length);
   }, [words]);
 
+
+  // Word data add
   const AddWordData = (data) => {
     const wordsJson = JSON.parse(localStorage.getItem("words"));
     const isHave = wordsJson.find((word) => word.id === data.id);
@@ -41,10 +47,10 @@ function Jar({
       localStorage.setItem("words", JSON.stringify(wordsJson));
       setWords(wordsJson);
     }
-
   }
 
- 
+
+  // Word data update
   const UpdateWordData = (data) => {
     for (let i = 0; i < words.length; i++) {
       if (words[i].id === data.id) {
@@ -57,19 +63,20 @@ function Jar({
     localStorage.setItem("words", JSON.stringify(words));
   }
 
+  
   return (
     <>
       <main className=" text-center text-5xl flex-1 flex flex-wrap ">
-
-
         <div className="items-center text-center justify-center flex-1 flex flex-wrap">
           <div className="text-center justify-items-center">
 
+            {/** Add Word Modal Component */}
             <AddWord
               status={addWordModal}
               handleWordModal={handleWordModal}
               AddWordData={AddWordData} />
 
+            {/** Question Modal Component */}
             <Question
               status={questionModal}
               handleQuestionModal={handleQuestionModal}
@@ -80,17 +87,12 @@ function Jar({
             />
 
             <p className="mb-4 text-4xl italic text-zinc-600 dark:text-white ">Choose word from the jar and test yourself</p>
-            {/* <div className="flex justify-center">
-              <div
-                onClick={handleQuestionModal}
-                className="rounded-full bg-neutral-950 dark:bg-white flex justify-center items-center hover:scale-105 cursor-pointer w-72 h-72"
-              >
-                <p className="text-white dark:text-neutral-950">{wordCount}</p>
-              </div>
-            </div> */}
+
+            {/** Light Jar */}
             <div className="flex justify-center dark:hidden mt-5">
               <img onClick={handleQuestionModal} className="dark:invisible hover:scale-110 hover:rotate-3 cursor-pointer w-64 h-80" src={Img} />
             </div>
+            {/** Dark Jar */}
             <div className="hidden dark:flex justify-center mt-5">
               <img onClick={handleQuestionModal} className="hover:scale-110 hover:rotate-3 invert cursor-pointer w-64 h-80" src={Img} />
             </div>

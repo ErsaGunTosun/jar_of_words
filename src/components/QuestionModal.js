@@ -6,6 +6,8 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
     const [isAnswer, setIsAnswer] = useState(false)
     const [notAnswer, setNotAnswer] = useState(true)
     const [isCorrect, setIsCorrect] = useState(undefined)
+
+    // Word selection function
     useEffect(() => {
         if (status) {
             if (words.length > 1) {
@@ -35,7 +37,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
         }
     }, [status])
 
-
+    // ıdontknow function
     const ıdontknow = () => {
         let updateWord = word;
         updateWord.showCount += 1;
@@ -44,6 +46,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
         setIsAnswer(true);
     }
 
+    // Answer check function
     const anwserCheck = () => {
         if (answer.toLowerCase() === word.meaning.toLowerCase()) {
             let updateWord = word;
@@ -62,7 +65,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
         }
     }
 
-
+    // Close modal function
     const closeModal = () => {
         setIsCorrect(undefined);
         setAnswer('');
@@ -77,19 +80,27 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
             <div id="popup-modal" tabIndex="-1" className={`${status ? "" : "hidden"} bg-black/5   h-full justify-center items-center mb-3 flex fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full`}>
                 <div className="relative w-full max-w-2xl max-h-full">
                     <div className="relative bg-zinc-300 dark:bg-neutral-800 rounded-lg mt-3">
-
+                        {/* Close Button */}
                         <button onClick={closeModal} type="button" 
                         className="absolute top-3 right-2.5 border rounded-lg text-sm p-1.5 ml-auto inline-flex items-center 
                         border-zinc-200 dark:border-neutral-700 text-zinc-800 dark:text-neutral-200 bg-transparent hover:bg-zinc-200 dark:hover:bg-neutral-700 " data-modal-hide="popup-modal">
                             <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                             <span className="sr-only">Close modal</span>
                         </button>
-                        {
-                            !notAnswer
+
+                        {  
+                            
+                            !notAnswer // Localstroge word check
                                 ?
                                 <div className="p-6 text-center">
+
+                                    {/* Title*/}
                                     <p className='text-white text-4xl'>Question</p>
+                                    
+                                    {/* Question */}
                                     <h3 className="mb-1 mt-3 text-xl font-normal text-zinc-700 dark:text-gray-200">What is the meaning of <span className='font-semibold'>"{word.word}"</span> ? </h3>
+
+                                    {/* Text confirming the answer  */}
                                     {
                                         isCorrect === true ?
                                             <p className='text-green-500 text-lg font-semibold'>
@@ -103,6 +114,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
 
                                     }
 
+                                    {/* Answer input and correct answer text */}
                                     {
                                         !isAnswer ?
                                             <div className="relative z-0 w-full mb-6 group text-start">
@@ -116,7 +128,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
                                     }
 
 
-
+                                    {/* Buttons Div */}
                                     <div className='flex justify-end'>
                                         {
                                             !isAnswer
@@ -145,6 +157,7 @@ function Question({ status, handleQuestionModal, words, UpdateWordData, oldWords
 
                                 </div>
                                 :
+                                // If there is no word in localstroge 
                                 <div className="p-6 text-center">
                                     <p className='text-red-500 text-4xl'>No word found</p>
                                     <h3 className="mb-2 mt-3 text-2xl font-normal text-zinc-700d dark:text-neutral-300">Add the word to test yourself </h3>

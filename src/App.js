@@ -9,11 +9,14 @@ function App() {
   const [addWordModal, setAddWordModal] = useState(false);
   const [questionModal, setQuestionModal] = useState(false);
 
+  // modal visible and hidden functions
   const handleShow = () => setShow(!show);
   const handleWordModal = () => setAddWordModal(!addWordModal);
   const handleQuestionModal = () => setQuestionModal(!questionModal);
+
   return (
     <div className="min-h-screen flex flex-col mx-auto bg-white dark:bg-neutral-950 ">
+
       <Header
         show={show}
         handleShow={handleShow}
@@ -29,6 +32,7 @@ function App() {
       />
 
       <Footer />
+
     </div>
   );
 }

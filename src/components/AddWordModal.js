@@ -9,6 +9,7 @@ function AddWord({ status, handleWordModal, AddWordData }) {
     const [errorMessage, setErrorMessage] = useState('')
 
 
+    // Close modal function
     const closeModal = () => {
         setError(false);
         setWord('');
@@ -17,6 +18,7 @@ function AddWord({ status, handleWordModal, AddWordData }) {
         handleWordModal();
     }
 
+    // Word add function
     const add = () => {
         if (word === '') {
             setError(true);
@@ -43,7 +45,6 @@ function AddWord({ status, handleWordModal, AddWordData }) {
             AddWordData(data);
             closeModal();
         }
-
     }
 
     return (
@@ -52,7 +53,8 @@ function AddWord({ status, handleWordModal, AddWordData }) {
             <div id="popup-modal" tabIndex="-1" className={`${status ? "" : "hidden"} bg-black/5 h-full justify-center items-center flex fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full`}>
                 <div className="relative w-full max-w-2xl max-h-full">
                     <div className="relative bg-zinc-300 dark:bg-neutral-800 rounded-lg">
-
+                        
+                        {/* Close button */}
                         <button onClick={closeModal} type="button"
                             className="absolute top-3 border rounded-md text-sm p-1.5 ml-auto inline-flex items-center right-2.5 
                             text-zinc-800 dark:text-neutral-200 border-zinc-200 dark:border-neutral-700 bg-transparent hover:bg-zinc-200 hover:dark:bg-neutral-700"
@@ -61,17 +63,21 @@ function AddWord({ status, handleWordModal, AddWordData }) {
                             <span className="sr-only">Close modal</span>
                         </button>
 
+                        {/* Modal Body */}
                         <div className="p-6 text-center">
-
+                            
+                            {/** Title */}
                             <p className='text-white text-5xl'>Add Word</p>
 
                             {
+                                // Error message
                                 error ?
                                     <p className='text-red-500 font-thin text-base text-start mb-3'><i className="fa-sharp fa-solid fa-circle-exclamation"></i> {errorMessage}</p>
                                     :
                                     ""
                             }
-
+                        
+                            {/* Word inputs Div */}
                             <div>
                                 <div className="relative z-0 w-full mb-6 group text-start">
                                     <input autoComplete='off' value={word} onChange={(e) => setWord(e.target.value)} type="email" name="word" id="word" className="block py-2.5 px-0 w-full text-base text-zinc-900 dark:text-neutral-100 bg-transparent border-0 border-b-2 border-zinc-600 dark:border-neutral-500 appearance-none  focus:outline-none focus:ring-0 focus:border-zinc-900 dark:focus:border-neutral-100 peer" placeholder=" " required />
@@ -92,8 +98,8 @@ function AddWord({ status, handleWordModal, AddWordData }) {
                             </div>
 
 
+                            {/* Buttons Div */}
                             <div className='flex justify-end'>
-
                                 <button onClick={add} type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                     Add Word
                                 </button>
@@ -101,7 +107,6 @@ function AddWord({ status, handleWordModal, AddWordData }) {
                                 <button onClick={closeModal} type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-2 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:focus:ring-neutral-600 dark:border-neutral-600">
                                     Cancel
                                 </button>
-
                             </div>
 
                         </div>
