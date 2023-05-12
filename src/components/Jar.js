@@ -79,7 +79,7 @@ function Jar({
               setOldWords={setOldWords}
             />
 
-            <p className="mb-4 text-5xl italic text-neutral-950 dark:text-white ">Click and test yourself</p>
+            <p className="mb-4 text-4xl italic text-zinc-600 dark:text-white ">Choose word from the jar and test yourself</p>
             {/* <div className="flex justify-center">
               <div
                 onClick={handleQuestionModal}

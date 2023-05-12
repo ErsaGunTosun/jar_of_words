@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function Header({ show, handleShow, handleWordModal }) {
   const [status, setStatus] = React.useState(false);
+  const [theme, setTheme] = useState(localStorage.theme);
   const exportWords = () => {
     const fileData = localStorage.getItem("words");
     const blob = new Blob([fileData], { type: "text/plain" });
@@ -49,12 +50,15 @@ function Header({ show, handleShow, handleWordModal }) {
 
   const changeTheme = () => {
     if (localStorage.theme === 'dark') {
+      setTheme('light');
       localStorage.theme = 'light';
       document.documentElement.classList.remove("dark");
     } else if (localStorage.theme === 'light') {
+      setTheme('dark');
       localStorage.theme = 'dark';
       document.documentElement.classList.add("dark");
     } else {
+      setTheme('light');
       localStorage.theme = 'light';
       document.documentElement.classList.remove("dark");
     }
@@ -70,51 +74,57 @@ function Header({ show, handleShow, handleWordModal }) {
   };
 
   const closeOpenModal = () => {
-    if(!status) handleShow();
-    
+    if (!status) handleShow();
+
     setStatus(!status);
   }
 
   return (
     <header className="text-end py-3">
-      <div className="flex justify-end gap-5 mr-5 ">
+      <div className="flex justify-end items-center gap-5 mr-5 ">
         <button
           onClick={openModal}
           type="button"
-          className="text-white dark:text-neutral-950 font-semibold italic bg-neutral-950 hover:bg-neutral-700
+          className="text-zinc-400 border-2 dark:text-neutral-950 font-semibold italic bg-tranparent hover:bg-zinc-200
           dark:bg-white dark:hover:bg-neutral-200
-           focus:outline-none focus:ring-1 focus:ring-gray-300  rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+           focus:outline-none focus:ring-1 focus:ring-gray-300  rounded-lg text-sm px-5 py-2.5"
         >
           Add Word
         </button>
 
         <p
-          className="cursor-pointer m-0 p-0 align-middle h-fit"
+          className="cursor-pointer flex m-0 align-middle border bg-transparent hover:bg-zinc-200 rounded-md w-12 h-10 items-center justify-center"
           onClick={handleShow}
         >
-          <i className="fa-solid fa-gear text-2xl text-neutral-950 dark:text-white  focus:animate-spin-slow"></i>
+          <div className="text-zinc-400">
+            {
+              show ? <i class="fa-solid fa-times text-xl"></i> : <i class="fa-solid fa-bars text-xl"></i>
+            }
+          </div>
+
         </p>
       </div>
 
 
 
-      <div className="absolute w-full">
+      <div className="absolute w-full mt-3">
         {show && (
-          <div className="text-white dark:text-neutral-950  flex justify-end static">
-            <div className="mr-5 rounded-md text-lg text-start">
-              <p onClick={closeOpenModal} className=" pb-1 pt-2  px-6 rounded-t-md  bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
+          <div className="text-zinc-500  flex justify-end static">
+            <div className="mr-5 rounded-md text-lg text-start border-2 border-zinc-300">
+              
+              <p onClick={closeOpenModal} className=" pb-1 pt-2  px-6 rounded-t-md  bg-zinc-200 hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
                 <i className="fa-solid fa-file-import"></i> Words File Import
               </p>
 
-              <p onClick={exportWords} className=" py-1 px-6 bg-neutral-950 hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
+              <p onClick={exportWords} className=" py-1 px-6 bg-zinc-200 hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer">
                 <i className="fa-solid fa-floppy-disk"></i> Words Export
               </p>
 
               <p
                 onClick={changeTheme}
-                className="pt-1 pb-2 px-6 bg-neutral-950 rounded-b-md hover:bg-neutral-700 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer"
+                className="pt-1 pb-2 px-6 bg-zinc-200 rounded-b-md hover:bg-zinc-300 dark:bg-white dark:hover:bg-neutral-200 cursor-pointer"
               >
-                {localStorage.theme === "light" ? (
+                {theme === "light" ? (
                   <span>
                     <i className="fa-solid fa-moon"></i> Dark Mode
                   </span>
@@ -124,10 +134,12 @@ function Header({ show, handleShow, handleWordModal }) {
                   </span>
                 )}
               </p>
+
             </div>
           </div>
         )}
       </div>
+
 
       <div id="popup-modal" tabIndex="-1" className={`${status ? "" : "hidden"} bg-black/10 h-full justify-center items-center flex fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full`}>
         <div className="relative w-full max-w-sm max-h-full">
